@@ -78,7 +78,7 @@ public class User {
     @JoinColumn(name="user_addr")
 	private Address address;
     
-    @OneToMany(mappedBy ="CurUser",cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy ="curUser",cascade = CascadeType.ALL,orphanRemoval = true)
 	private List<CartItem> CartList=new ArrayList<CartItem>();
 
 }

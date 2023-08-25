@@ -40,4 +40,10 @@ public class Categories extends BaseEntity {
 	@OneToMany(mappedBy = "prodCategory",cascade=CascadeType.ALL,orphanRemoval = true)
 	private List<Product> ProdList=new ArrayList<Product>();
 	
+	//helper method
+	public void addProduct(Product prod) {
+		this.ProdList.add(prod);
+
+	}
+	
 }

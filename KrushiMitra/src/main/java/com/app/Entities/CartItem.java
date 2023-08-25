@@ -38,7 +38,7 @@ public class CartItem extends BaseEntity{
 	
 	@ManyToOne
 	@JoinColumn(name="Customer_id")
-    private User CurUser;
+    private User curUser;
     private int quantity;
     
     @Transient
