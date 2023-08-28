@@ -11,6 +11,7 @@ import javax.validation.constraints.NotNull;
 import com.app.Entities.Address;
 import com.app.Entities.Categories;
 import com.app.Entities.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreType;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
@@ -54,6 +55,6 @@ public class ProductDto {
 		@NotBlank
 		private LocalDate mfgDate;
 		
-		
+		@JsonIgnore
 		private Categories prodCategory;
 }

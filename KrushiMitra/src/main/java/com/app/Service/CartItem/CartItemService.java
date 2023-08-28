@@ -9,7 +9,7 @@ import com.app.exceptions.ShoppingCartException;
 
 @Service
 public interface CartItemService {
-
+   //customer
 	void addProduct(Long productId, int quantity, Long customerId) throws ShoppingCartException;
 	
 	List<CartItem> listCartItems(Long id);

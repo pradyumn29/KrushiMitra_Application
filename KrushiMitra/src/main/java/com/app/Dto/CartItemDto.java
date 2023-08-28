@@ -24,7 +24,7 @@ import lombok.ToString;
 @JsonIgnoreType
 public class CartItemDto {
 
-    private Product products;
+    private Long products;
     private Long CurUser;
     private int quantity;
 }

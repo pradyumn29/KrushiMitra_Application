@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreType;
 
 import lombok.AllArgsConstructor;
@@ -37,12 +38,14 @@ public class Categories extends BaseEntity {
 	@Column(length = 150)
 	private String imageUrl;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "prodCategory",cascade=CascadeType.ALL,orphanRemoval = true)
 	private List<Product> ProdList=new ArrayList<Product>();
 	
 	//helper method
 	public void addProduct(Product prod) {
 		this.ProdList.add(prod);
+		prod.setProdCategory(this);
 
 	}
 	

@@ -53,8 +53,9 @@ public class CartItemImpl implements CartItemService {
 
 	@Override
 	public List<CartItem> listCartItems(Long Custid) {
-	//   User customer=userRepo.findById(Custid).orElseThrow(()->new UserHandlingException("Invalid Id entered"));
-	   return cartRepo.findByCurUser(Custid);
+	User OpCustomer=userRepo.findById(Custid).orElseThrow(()->new UserHandlingException("Invalid Id entered"));
+	User customer = mapper.map(OpCustomer, User.class);
+	   return cartRepo.findByCurUser(customer);
 	     
 	}
 

@@ -35,13 +35,32 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public UserDto AddNewUser(UserDto newUser) {
-	   Address address=newUser.getAddress();
-	   addressRepo.save(address);
-	   
-	   User user=mapper.map(newUser, User.class);
-	    User adduser=userRepo.save(user);
+		System.out.println(newUser.getFirstname());
+	//	System.out.println(newUser.getAddress());
+		System.out.println("hiii mohit");
+//---------------------------map address n set adress to save----------------------------------------		
+		Address add=mapper.map(newUser,Address.class);
+		add.setId(newUser.getId());
+		add.setAddressLine1(newUser.getAddressLine1());
+		add.setAddressLine2(newUser.getAddressLine2());
+		add.setCity(newUser.getCity());
+		add.setCountry(newUser.getCountry());
+		add.setHouse_number(newUser.getHouse_number());
+		add.setPostalcode(newUser.getPostalcode());
+		add.setState(newUser.getState());
+		add.setStreet_number(newUser.getStreet_number());
+		System.out.println(add);
+		
+		Address newAddress=addressRepo.save(add);
+		//System.out.println(newAddress);
+//------------------------------map	user and Save----------------------------------------------------------------	
+		 User user=mapper.map(newUser, User.class);
+		 user.setAddress(newAddress);
+		 System.out.print(user);
+//---------------------------------------save user---------------------------------------------------------------
+		    User adduser=userRepo.save(user);
 	    
-		return mapper.map(adduser, UserDto.class);
+		return mapper.map(adduser,UserDto.class);
 	}
 
 	@Override
@@ -70,18 +89,38 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDto updateExistingUser(UserDto updateUser) {
-		User user=userRepo.findByEmail(updateUser.getEmail())
+		User Exstinguser=userRepo.findByEmail(updateUser.getEmail())
 				            .orElseThrow(()->new UserHandlingException("Invalid Email entered"));
-		
-		if(user!=null) {
-			user.setFirstname(updateUser.getFirstname());
-			user.setLastname(updateUser.getLastname());
-			user.setEmail(updateUser.getEmail());
-		    user.setContactNumber(updateUser.getContactNumber());
-		    user.setDOB(updateUser.getDOB());
-		    user.setAge(updateUser.getAge());
-		    user.setPassword(updateUser.getPassword());
-		    user.setAddress(updateUser.getAddress());
+//-------------------------user update------------------------------------------------------------
+		if(Exstinguser!=null) {
+			Exstinguser.setFirstname(updateUser.getFirstname());
+			Exstinguser.setLastname(updateUser.getLastname());
+			//Exstinguser.setEmail(updateUser.getEmail());
+			Exstinguser.setContactNumber(updateUser.getContactNumber());
+			Exstinguser.setDOB(updateUser.getDOB());
+			Exstinguser.setAge(updateUser.getAge());
+			Exstinguser.setPassword(updateUser.getPassword());
+		//	Exstinguser.setAddress(updateUser.getAddress());
+
+//---------------------------Address update-------------------------------------------------------	
+			Address add=mapper.map(updateUser,Address.class);
+			add.setId(updateUser.getId());
+			add.setAddressLine1(updateUser.getAddressLine1());
+			add.setAddressLine2(updateUser.getAddressLine2());
+			add.setCity(updateUser.getCity());
+			add.setCountry(updateUser.getCountry());
+			add.setHouse_number(updateUser.getHouse_number());
+			add.setPostalcode(updateUser.getPostalcode());
+			add.setState(updateUser.getState());
+			add.setStreet_number(updateUser.getStreet_number());
+			System.out.println(add);
+//-----------------------saving address----------------------------------------------------------------
+			Address newAddress=addressRepo.save(add);
+//----------------------set new address to the mapped user class---------------------------------------			
+			User user=mapper.map(Exstinguser,User.class);
+			user.setAddress(newAddress);
+	
+//---------------------------------------save user----------------------------------------------------			
 		    User updatedUser=userRepo.save(user);
 		    
 		    return mapper.map(updatedUser, UserDto.class);

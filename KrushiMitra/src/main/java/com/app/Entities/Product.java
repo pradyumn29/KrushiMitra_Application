@@ -16,6 +16,7 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreType;
 
 import lombok.AllArgsConstructor;
@@ -62,13 +63,16 @@ public class Product extends BaseEntity{
 	@Column
 	private LocalDate mfgDate;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "Category_id")
 	private Categories prodCategory;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "products",cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Orders> OrderDetails=new ArrayList<Orders>();
-	
+	   
+	@JsonIgnore
 	@OneToMany(mappedBy = "products", 
 			cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<CartItem> cartItemList=new ArrayList<CartItem>();

@@ -27,9 +27,20 @@ public class ProductServiceImpl implements ProductService {
 	
 	@Override
 	public Product addNewProduct(Product newProd, String CategoryName) {
+		
 		Categories category=catRepo.findByCategoryNameIgnoreCase(CategoryName).orElseThrow();
+		//newProd.setProdCategory(category);
+		//System.out.println("in service "+category);
+		//System.out.println("in service "+newProd);
+		if(category!=null) {
 		category.addProduct(newProd);
+		newProd.addNewCategory(category);
+		
+		//System.out.println("in service "+newProd);
 		return prodRepo.save(newProd);
+		}else {
+			 throw new ProductNotExistsExceptions("category not valid");
+		}
 	}
 
 	@Override
@@ -71,6 +82,7 @@ public class ProductServiceImpl implements ProductService {
 	   product.setProdWeight(updateProd.getProdWeight());
 	   product.setSpecification(updateProd.getSpecification());
 	   product.setUnitPrice(updateProd.getUnitPrice());
+	    prodRepo.save(product);
 	   
 		return product;
 	}

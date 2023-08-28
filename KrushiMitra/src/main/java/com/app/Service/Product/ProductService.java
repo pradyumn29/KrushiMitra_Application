@@ -10,13 +10,14 @@ import com.app.Entities.Product;
 
 @Service
 public interface ProductService {
-	
+	//seller
     Product addNewProduct(Product newProd,String CategoryName);
     
+    //all
     List<Product> getAllProduct();
     List<Product>getAllProductByCategory(String CategoryName);
     Product getProductById(Long prodID);
-    
+    //seller
     void removeProduct(Long ProductId);
     Product updateProduct(Product updateProd);
     

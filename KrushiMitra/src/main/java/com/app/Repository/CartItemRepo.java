@@ -12,7 +12,7 @@ import com.app.Entities.User;
 @Repository
 public interface CartItemRepo extends JpaRepository<CartItem,Long> {
     
-	List<CartItem> findByCurUser(Long userId);
+	List<CartItem> findByCurUser(User userId);
     
     @Modifying
 	@Query("DELETE FROM CartItem c WHERE c.curUser.id = ?1 AND c.products.id = ?2")

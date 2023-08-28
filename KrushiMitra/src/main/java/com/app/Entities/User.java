@@ -13,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -22,6 +23,7 @@ import javax.validation.constraints.Pattern;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreType;
 
 import lombok.AllArgsConstructor;
@@ -74,11 +76,13 @@ public class User {
     @Column
 	private Role role;
     
+    @JsonIgnore
     @OneToOne
-    @JoinColumn(name="user_addr")
+    @JoinColumn(name="user_addr"/*insertable = true*/)
 	private Address address;
     
     @OneToMany(mappedBy ="curUser",cascade = CascadeType.ALL,orphanRemoval = true)
 	private List<CartItem> CartList=new ArrayList<CartItem>();
-
+    
+    
 }

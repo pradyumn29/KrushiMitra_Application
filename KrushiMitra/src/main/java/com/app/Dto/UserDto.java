@@ -21,6 +21,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.app.Entities.Address;
 import com.app.Entities.CartItem;
 import com.app.Entities.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreType;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
@@ -58,6 +59,23 @@ public class UserDto {
 		private LocalDate DOB;
 	    
 		private Role role;
-	   
-		private Address address;
+	
+		//private Address address;
+		
+		private int house_number;
+		
+		private int street_number;
+
+		private String AddressLine1;
+	
+		private String AddressLine2;
+	
+		private String City;
+		
+		private String state;
+	
+		private int postalcode;
+		
+		private String country;
+		
 }
