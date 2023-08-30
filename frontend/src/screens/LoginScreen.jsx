@@ -22,7 +22,7 @@ const Login = () => {
       })
 
       if (res.status === 200) {
-        toast.success('Login successfully')
+        toast.success('Login successfully')     
         
         navigate('/')
         console.log(res.data)

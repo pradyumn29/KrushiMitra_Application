@@ -1,10 +1,8 @@
-package com.app.Controller;
+package com.app.controller;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,48 +14,48 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.app.Entities.Categories;
-import com.app.Entities.Product;
-import com.app.Service.Product.ProductService;
+import com.app.dto.ProductDto;
+import com.app.pojos.Categorys;
+
+import com.app.pojos.Products;
+import com.app.service.ProductInterface;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/product")
+@RequestMapping("/api/prod")
 public class ProductController {
-	
+
 	@Autowired
-	private ProductService prodServ;
-	
-	@PostMapping("/addprod/{catName}")
-	public ResponseEntity<?> addProduct(@RequestBody Product product,@RequestParam String categoryName){
-		System.out.println("in controller "+product);
-		return new ResponseEntity<>(prodServ.addNewProduct(product, categoryName), HttpStatus.CREATED);
-	}
-	
-	@GetMapping("/productList")
-	public List<Product> AllProductList(){
-		return prodServ.getAllProduct();
-	}
-	
-	@GetMapping("/categeory/{category}")
-	public List<Product> AllProductbyCategory(@PathVariable String category){
-		return prodServ.getAllProductByCategory(category);
-	}
-	
-	@GetMapping("/{id}")
-	public Product getByProductId(@PathVariable long id)
-	{
-		return prodServ.getProductById(id);
-	}
-	
-	@DeleteMapping("/delete/{id}")
-	public void deleteProduct(@PathVariable Long id) {
-		prodServ.removeProduct(id);
-	}
-	
-	@PutMapping("/update")
-	public ResponseEntity<?> updateProduct(@RequestBody Product updateProd){
-		return new ResponseEntity<>(prodServ.updateProduct(updateProd), HttpStatus.OK);
+	private ProductInterface prodImpl;
+
+	@GetMapping
+	public List<Products> getDatailsOfSeeds() {
+
+		return prodImpl.getAllSeedsData();
 	}
 
+	@PostMapping("/add/{catName}")
+	public void addNewProduct(@RequestBody Products Obj,@PathVariable String catName) {
+		prodImpl.addNewSeeds(Obj,catName);
+	}
+
+	@DeleteMapping("/{prodId}")
+	public void deleteProductById(@PathVariable Long prodId) {
+		prodImpl.removeSeedDetails(prodId);
+	}
+	
+	//@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PutMapping
+	public void updateProductInfo(@RequestBody Products prodId) {
+		prodImpl.updateSeedProdDetails(prodId);
+	}
+	@GetMapping("/{catName}")
+	public List<Products> getAllProductByCategory(@PathVariable String catName){
+		return prodImpl.getAllProductByProducts(catName);
+	}
+	@GetMapping("/prod/{prodID}")
+	public Products getProductById(@PathVariable Long prodID) {
+		return prodImpl.getProductById(prodID);
+	}
+	
 }

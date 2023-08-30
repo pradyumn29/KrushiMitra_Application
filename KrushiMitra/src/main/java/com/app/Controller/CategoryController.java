@@ -1,10 +1,8 @@
-package com.app.Controller;
+package com.app.controller;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,34 +13,36 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.app.Entities.Categories;
-import com.app.Service.Categories.CategoryService;
-
+import com.app.pojos.Categorys;
+import com.app.pojos.Products;
+import com.app.service.CategoryInterface;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/category")
+@RequestMapping("/api/category")
 public class CategoryController {
-
 	@Autowired
-	private CategoryService catService;
+	private CategoryInterface categoryImpl;
 	
 	@GetMapping("/view")
-	public List<Categories> viewAllCategory(){
-		return catService.getAllCategory();
+	public List<Categorys> getAllCategorysList(){
+		return categoryImpl.getAllCategoryInfo();
 	}
 	
 	@PostMapping("/add")
-	public ResponseEntity<?> AddCategory(@RequestBody Categories category){
-		return new ResponseEntity<>(catService.addNewCategory(category), HttpStatus.ACCEPTED);
+	public void addNewProduct(@RequestBody Categorys categoryObj) {
+		categoryImpl.addNewCategoryInToList(categoryObj);
 	}
 	
 	@PutMapping("/update")
-	public ResponseEntity<?> updateCategory(@RequestBody Categories category){
-		return new ResponseEntity<>(catService.updateCategory(category), HttpStatus.ACCEPTED);
+	public void updateCategoryInfo(@RequestBody Categorys catObj) {
+		categoryImpl.updateCategoryDetils(catObj);
 	}
-	
-	@DeleteMapping("/delete/{id}")
-	public void deleteCategory(@PathVariable Long id) {
-		catService.deleteCategory(id);
+	@DeleteMapping("/{categoryID}")
+	public void daleteCategory(@PathVariable Long categoryID ) {
+		categoryImpl.deleteCategoryById(categoryID);
 	}
+//	@GetMapping("/{catName}")
+//	public List<Products> getAllProductByCategory(@PathVariable String catName){
+//		return categoryImpl.getAllProductByCategory(catName);
+//	}
 }

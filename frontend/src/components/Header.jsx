@@ -9,7 +9,7 @@ import { toast, Toaster } from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 import { useCart } from '../context/Cart'
 import { Badge } from 'antd'
-import "./imag/krushikart logo.png"
+
 function BasicExample() {
   const [auth, setAuth] = useAuth()
   const [cart] = useCart()
@@ -37,10 +37,10 @@ function BasicExample() {
           <Navbar.Brand>
             
             <img
-            height={150}
-            width={250}
+            height={70}
+            width={100}
             
-src="/images/paddy.png"            />
+src="/images/paddy.png"         />
             
           </Navbar.Brand>
         </LinkContainer>

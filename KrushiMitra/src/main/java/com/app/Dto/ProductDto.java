@@ -1,60 +1,112 @@
-package com.app.Dto;
+package com.app.dto;
 
 import java.time.LocalDate;
 
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 
-import com.app.Entities.Address;
-import com.app.Entities.Categories;
-import com.app.Entities.Role;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreType;
+import org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration;
+
+import com.app.pojos.Role;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
-@ToString
-@JsonIgnoreType
-public class ProductDto {
-
-	    @NotBlank
-		private String prodname;
-	    
-	   @NotBlank
-		private String prodDesc;
-	    
-	   @NotBlank
-		private double unitPrice;
-	    
-	   @NotBlank
-		private int prodQuantity;
-	    
+public class ProductDto extends JpaRepositoriesAutoConfiguration {
 	
-		@NotBlank@NotNull
-		private String imageUrl;
+	@JsonProperty(access = Access.READ_ONLY)
+	private Long id;
 	
-		@NotNull
-		private double prodWeight;
-		
-		@NotBlank
-		private String Specification;
-		
-		@NotBlank
-		private LocalDate mfgDate;
-		
-		@JsonIgnore
-		private Categories prodCategory;
+	@NotEmpty(message = "Product name must be supplied")
+	private String prodName;
+	
+	@NotEmpty(message = "Product Description must be supplied")
+	private String prodDesc;
+	
+	
+	private double unitPrice;
+	
+	private int prodQuantity;
+	
+	private String imageUrl;
+	
+	private double prodWeight;
+	
+	private String special_specification;
+	
+	private LocalDate mfgDate;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getProdName() {
+		return prodName;
+	}
+
+	public void setProdName(String prodName) {
+		this.prodName = prodName;
+	}
+
+	public String getProdDesc() {
+		return prodDesc;
+	}
+
+	public void setProdDesc(String prodDesc) {
+		this.prodDesc = prodDesc;
+	}
+
+	public double getUnitPrice() {
+		return unitPrice;
+	}
+
+	public void setUnitPrice(double unitPrice) {
+		this.unitPrice = unitPrice;
+	}
+
+	public int getProdQuantity() {
+		return prodQuantity;
+	}
+
+	public void setProdQuantity(int prodQuantity) {
+		this.prodQuantity = prodQuantity;
+	}
+
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+
+	public double getProdWeight() {
+		return prodWeight;
+	}
+
+	public void setProdWeight(double prodWeight) {
+		this.prodWeight = prodWeight;
+	}
+
+	public String getSpecial_specification() {
+		return special_specification;
+	}
+
+	public void setSpecial_specification(String special_specification) {
+		this.special_specification = special_specification;
+	}
+
+	public LocalDate getMfgDate() {
+		return mfgDate;
+	}
+
+	public void setMfgDate(LocalDate mfgDate) {
+		this.mfgDate = mfgDate;
+	}
+	
+	
+	
+
 }

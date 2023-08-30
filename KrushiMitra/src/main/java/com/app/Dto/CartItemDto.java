@@ -1,30 +1,49 @@
-package com.app.Dto;
+package com.app.dto;
 
-import java.time.LocalDate;
+import com.app.pojos.Products;
 
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
-import com.app.Entities.Categories;
-import com.app.Entities.Product;
-import com.app.Entities.User;
-import com.fasterxml.jackson.annotation.JsonIgnoreType;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
-@ToString
-@JsonIgnoreType
 public class CartItemDto {
+	
+	private Long id;
+	private Integer quantity;
+	private Products product;
+	
+	public CartItemDto(Long id, Integer quantity, Products product) {
+		super();
+		this.id = id;
+		this.quantity = quantity;
+		this.product = product;
+	}
 
-    private Long products;
-    private Long CurUser;
-    private int quantity;
+	public CartItemDto() {
+		super();
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Integer getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
+	}
+
+	public Products getProduct() {
+		return product;
+	}
+
+	public void setProduct(Products product) {
+		this.product = product;
+	}
+	
+	
+	
+
 }

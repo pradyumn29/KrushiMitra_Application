@@ -82,7 +82,7 @@ const PaymentSceen = () => {
                       type="text"
                       id="formControlLgXsd"
                       class="form-control form-control-lg"
-                      value="Rohit Gadakh "
+                      value="krushi Mitra "
                     />
                     <label class="form-label" for="formControlLgXsd">
                       Cardholder's Name

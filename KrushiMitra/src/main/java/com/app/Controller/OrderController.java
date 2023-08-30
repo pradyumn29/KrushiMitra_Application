@@ -1,4 +1,4 @@
-package com.app.Controller;
+package com.app.controller;
 
 import java.util.List;
 
@@ -13,35 +13,48 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.app.Dto.OrderDto;
-import com.app.Entities.Orders;
-import com.app.Service.Order.OrderService;
+import com.app.custom_Exceptions.OrderNotFoundException;
+import com.app.dto.OrderByCartDto;
+import com.app.pojos.Orders;
+import com.app.service.Order.IOrderServices;
+import com.razorpay.RazorpayException;
+
+import lombok.extern.slf4j.Slf4j;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/order")
+@RequestMapping("/api/order")
+@Slf4j
 public class OrderController {
 	
 	@Autowired
-	private OrderService orderService;
+	private IOrderServices orderServices;
 	
+	@GetMapping("/{id}")
+	public ResponseEntity<?> getOrder(@PathVariable("id") Long id) throws OrderNotFoundException {
+//		log.info("In Order Controller : get Order");
+		Orders order = orderServices.getOrders(id);
+		return new ResponseEntity<>(order, HttpStatus.OK);
+	}
+	
+	@GetMapping("/userOrder/{userId}")
 
-	@GetMapping("/Order/{id}")
-	public Orders viewOrders(@PathVariable Long id) {
-		
-		return orderService.getOrders(id);
+	public ResponseEntity<?> getOrderList(@PathVariable("userId") Long id) {
+//		log.info("In Order Controller : get OrderList by user ID");
+		List<Orders> orderList = orderServices.getOrderList(id);
+
+		return new ResponseEntity<>(orderList, HttpStatus.OK);
 	}
 	
-	@PostMapping("/placeOrder/{id}")
-	public ResponseEntity<?> placeOrder(@PathVariable Long id){
-		
-		return new ResponseEntity<>(orderService.PlaceOrder(id), HttpStatus.OK);
+	@PostMapping("/place")
+	public ResponseEntity<?> placeOrderByCart(@RequestBody OrderByCartDto orderCart) throws RazorpayException {
+//		log.info("In Order Controller : place OrderBycart");
+		String order = orderServices.createOrderByUserCart(orderCart.getId(), orderCart.getAddress(),
+				orderCart.getPaymentType());
+		return new ResponseEntity<>(order, HttpStatus.OK);
 	}
+
 	
-	@GetMapping("orderList/{id}")
-	public List<Orders> orderList(@PathVariable Long UserId){
-		
-		return orderService.getOrdersByUserId(UserId);
-	}
+	
 
 }
